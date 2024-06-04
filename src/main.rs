@@ -6,14 +6,16 @@ use url::Url;
 
 #[tokio::main]
 async fn main() {
+    // use beta-5 endpoint ("fuel-17")
     let client_config = Config {
-        url: Url::parse("https://fuel-testnet.hypersync.xyz").unwrap(),
+        url: Url::parse("https://fuel-17.hypersync.xyz").unwrap(),
         bearer_token: None,
         http_req_timeout_millis: NonZeroU64::new(30000).unwrap(),
     };
     let client = Client::new(client_config).unwrap();
 
     let height = client.get_height().await.unwrap();
+    // let height = 1;
     println!("Current height: {}", height);
 
     let query: Query = serde_json::from_value(serde_json::json!({
@@ -32,16 +34,17 @@ async fn main() {
                 arrow structs but would complicate the rest of our query engine).
                 For simplicity, we 'flatten' the fields of these structs into our schema.
 
-                For example, Fuel transactions contain a Policy struct:
+                For example, Fuel transactions contain an InputContract struct:
 
                 In Fuel schema:
 
                     Transaction {
-                        Policies {
-                            tip
-                            witnessLimit
-                            maturity
-                            maxFee
+                        InputContract {
+                            utxo_id
+                            balance_root
+                            state_root
+                            tx_pointer_block_height
+                            tx_pointer_tx_index
                         }
                         ... other fields
                     }
@@ -49,10 +52,11 @@ async fn main() {
                 In our schema:
 
                     Transaction {
-                        policies_tip
-                        policies_witness_limit
-                        policies_maturity
-                        policies_max_fee
+                        input_contract_utxo_id
+                        input_contract_balance_root
+                        input_contract_state_root
+                        input_contract_tx_pointer_block_height
+                        input_contract_tx_pointer_tx_index
                         ... other fields
                     }
              */
@@ -68,15 +72,11 @@ async fn main() {
                 "input_contract_tx_pointer_block_height",
                 "input_contract_tx_pointer_tx_index",
                 "input_contract",
-                "policies_tip",
-                "policies_witness_limit",
-                "policies_maturity",
-                "policies_max_fee",
-                "script_gas_limit",
+                "gas_price",
+                "gas_limit",
                 "maturity",
                 "mint_amount",
                 "mint_asset_id",
-                "mint_gas_price",
                 "tx_pointer_block_height",
                 "tx_pointer_tx_index",
                 "tx_type",
@@ -91,13 +91,7 @@ async fn main() {
                 "script",
                 "script_data",
                 "bytecode_witness_index",
-                "bytecode_root",
-                "subsection_index",
-                "subsections_number",
-                "proof_set",
-                "consensus_parameters_upgrade_purpose_witness_index",
-                "consensus_parameters_upgrade_purpose_checksum",
-                "state_transition_upgrade_purpose_root",
+                "bytecode_length",
                 "salt",
             ]
         }
