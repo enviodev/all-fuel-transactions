@@ -114,7 +114,7 @@ async fn main() {
 
     let end_time = Instant::now();
     println!(
-        "Got all transactions in {} blocks in {}ms",
+        "Got all transactions in {} blocks in {} seconds",
         height,
         (end_time - start_time).as_secs()
     );
