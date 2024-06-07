@@ -6,24 +6,23 @@ use url::Url;
 
 #[tokio::main]
 async fn main() {
-    // use beta-5 endpoint ("fuel-17")
     let client_config = Config {
-        url: Url::parse("https://fuel-17.hypersync.xyz").unwrap(),
+        url: Url::parse("https://fuel-beta-5.hypersync.xyz").unwrap(),
         bearer_token: None,
         http_req_timeout_millis: NonZeroU64::new(30000).unwrap(),
     };
     let client = Client::new(client_config).unwrap();
 
     let height = client.get_height().await.unwrap();
-    // let height = 1;
     println!("Current height: {}", height);
 
     let query: Query = serde_json::from_value(serde_json::json!({
         // start at block 0
         "from_block": 0,
-        // empty receipt selection means we're not looking for any data in particular
         "receipts": [{}],
-        // load all the blocks, even if they don't match our selection (empty receipt selection)
+        "inputs": [{}],
+        "outputs": [{}],
+        // load all the blocks, even if they don't match our selection
         "include_all_blocks": true,
         // the fields we want returned from the blocks that are loaded
         "field_selection": {
