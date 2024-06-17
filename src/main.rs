@@ -7,7 +7,7 @@ use url::Url;
 #[tokio::main]
 async fn main() {
     let client_config = Config {
-        url: Url::parse("https://fuel-beta-5.hypersync.xyz").unwrap(),
+        url: Url::parse("https://fuel-testnet-3.hypersync.xyz").unwrap(),
         bearer_token: None,
         http_req_timeout_millis: NonZeroU64::new(30000).unwrap(),
     };
@@ -71,11 +71,15 @@ async fn main() {
                 "input_contract_tx_pointer_block_height",
                 "input_contract_tx_pointer_tx_index",
                 "input_contract",
-                "gas_price",
-                "gas_limit",
+                "policies_tip",
+                "policies_witness_limit",
+                "policies_maturity",
+                "policies_max_fee",
+                "script_gas_limit",
                 "maturity",
                 "mint_amount",
                 "mint_asset_id",
+                "mint_gas_price",
                 "tx_pointer_block_height",
                 "tx_pointer_tx_index",
                 "tx_type",
@@ -90,7 +94,13 @@ async fn main() {
                 "script",
                 "script_data",
                 "bytecode_witness_index",
-                "bytecode_length",
+                "bytecode_root",
+                "subsection_index",
+                "subsections_number",
+                "proof_set",
+                "consensus_parameters_upgrade_purpose_witness_index",
+                "consensus_parameters_upgrade_purpose_checksum",
+                "state_transition_upgrade_purpose_root",
                 "salt",
             ]
         }
