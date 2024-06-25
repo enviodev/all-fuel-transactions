@@ -6,8 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-hyperfuel-client = "0.0.7"
-hyperfuel-net-types = "0.0.3"
+hyperfuel-client = "2.1.0"
+hyperfuel-net-types = "3.0.0"
 serde_json = "1.0.117"
 tokio = { version = "1", features = ["full"] }
 url = "2.5.0"
