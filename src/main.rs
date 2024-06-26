@@ -7,7 +7,7 @@ use url::Url;
 #[tokio::main]
 async fn main() {
     let client_config = Config {
-        url: Url::parse("https://fuel-testnet-3.hypersync.xyz").unwrap(),
+        url: Url::parse("https://fuel-testnet.hypersync.xyz").unwrap(),
         bearer_token: None,
         http_req_timeout_millis: NonZeroU64::new(30000).unwrap(),
     };
